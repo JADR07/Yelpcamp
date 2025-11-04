@@ -23,7 +23,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user.js');
 const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
-const dbUrl = process.env.DB_URL;
+const dbUrl = 'mongodb://127.0.0.1:27017/yelp-camp-maptiler'
 
 mongoose.connect(dbUrl)
 
@@ -150,7 +150,7 @@ app.use((err, req, res, next) => {
     const { statusCode = 500 } = err;
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
     res.status(statusCode).render('Error', { err })
-})
+
 
 app.listen(3000, (req,res) => {
     console.log('Activo en el puerto 3000');
