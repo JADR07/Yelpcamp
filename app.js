@@ -143,14 +143,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(sanitizeV5({ replaceWith: '_' }));
 
 app.all(/(.*)/, (req, res, next) => {
-    next(new ExpressError(404, "Error"))
+    next(new ExpressError(404, "Page not found"))
 })
 
 app.use((err, req, res, next) => {
-    const {statusCode = 500} = err
-    res.status(statusCode).render('Error', {err})
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, Something Went Wrong!'
+    res.status(statusCode).render('error', { err })
 })
-
 
 app.listen(3000, (req,res) => {
     console.log('Activo en el puerto 3000');
